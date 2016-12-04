@@ -1,0 +1,57 @@
+use company
+switched to db company
+ 
+>db.info.find().forEach(printjson)
+{
+	"_id"	 : ObjectId("517e829d005b19f1f0d96b25"),
+	"name"	 : "Apple",
+	"product": "iPhone5S",
+	"emp_no" : 100
+}
+ 
+{
+	"_id"	 : ObjectId("517e8377005b19f1f0d96b26"),
+	"name"	 : "Technotip",
+	"product": "Video Tutorials - Educational",
+	"emp"	 : [
+			"Satish",
+			"Kiran"
+	],
+	"Videos" : {
+			"mongo" : "MongoDB Videos",
+			"php"	: "PHP Video Tutorials"
+	}
+  
+  Create another collection ceo and insert a document
+  
+db.ceo.insert({
+      name      : "SATISH",
+      company_id: db.info.find()[1]._id
+});
+>db.ceo.find().forEach(printjson)
+{
+        "_id" : ObjectId("51822e2c60e925795355fd26"),
+        "name" : "SATISH",
+        "company_id" : ObjectId("517e8377005b19f1f0d96b26")
+}
+  
+  Next, we query mongoDB to get some results based on this relationship.
+  
+  
+  db.info.find({ _id: db.ceo.find()[0].company_id }).forEach(printjson)
+{
+        "_id" : ObjectId("517e8377005b19f1f0d96b26"),
+        "name" : "Technotip",
+        "product" : "Video Tutorials - Educational",
+        "emp" : [
+                "Satish",
+                "Kiran"
+        ],
+        "videos" : {
+                "mongo" : "MongoDB Videos",
+                "php" : "PHP Video Tutorials"
+        }
+}
+
+
+
